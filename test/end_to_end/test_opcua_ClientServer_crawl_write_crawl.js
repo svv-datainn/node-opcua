@@ -43,17 +43,22 @@ describe("NodeCrawler after write",function(){
         // we use a different port for each tests to make sure that there is
         // no left over in the tcp pipe that could generate an error
         //port+=1;
-        server = build_server_with_temperature_device({ port:port},function(err) {
 
-            build_address_space_for_conformance_testing(server.engine, {mass_variables: false});
-
-            endpointUrl = server.endpoints[0].endpointDescriptions()[0].endpointUrl;
-            temperatureVariableId = server.temperatureVariableId;
-            done(err);
-        });
+        // server = build_server_with_temperature_device({ port:port},function(err) {
+        //
+        //     build_address_space_for_conformance_testing(server.engine, {mass_variables: false});
+        //
+        //     endpointUrl = server.endpoints[0].endpointDescriptions()[0].endpointUrl;
+        //     temperatureVariableId = server.temperatureVariableId;
+        //     done(err);
+        // });
+        done();
     });
 
     beforeEach(function(done){
+        //endpointUrl = 'opc.tcp://10.106.11.21:4840';
+        endpointUrl = 'opc.tcp://BEKK-PEROVY.BEKK.NO:4840';
+
         client = new OPCUAClient();
         done();
     });
@@ -64,7 +69,8 @@ describe("NodeCrawler after write",function(){
     });
 
     after(function(done){
-        server.shutdown(done);
+        //server.shutdown(done);
+        done();
     });
 
 
@@ -97,6 +103,8 @@ describe("NodeCrawler after write",function(){
 
                 function(inner_done) {
                     console.log('starting second');
+
+                    //return inner_done();
 
                     var nodeId = opcua.coerceNodeId(2294);
                     console.log(nodeId);
