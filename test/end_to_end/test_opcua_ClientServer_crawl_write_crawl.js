@@ -74,14 +74,11 @@ describe("NodeCrawler after write",function(){
 
             async.series([
                 function(inner_done) {
-                    console.log('Starting first');
                     var crawler = new NodeCrawler(session);
 
                     var nodeId = "RootFolder";
 
                     crawler.read(nodeId, function (err, obj) {
-                        console.log('first', err);
-
                         if (!err) {
                             console.log('read success');
                             obj.browseName.toString().should.equal("Root");
@@ -96,10 +93,8 @@ describe("NodeCrawler after write",function(){
                 },
 
                 function(inner_done) {
-                    console.log('starting second');
 
                     var nodeId = opcua.coerceNodeId(2294);
-                    console.log(nodeId);
 
                     var nodeToWrite =
                         {
@@ -108,9 +103,6 @@ describe("NodeCrawler after write",function(){
                         };
 
                     session.writeSingleNode(nodeId, nodeToWrite,function(err, results){
-
-                        console.log('res', results);
-
                         if (err) {
                             return inner_done(err);
                         }
@@ -123,15 +115,12 @@ describe("NodeCrawler after write",function(){
                 },
 
                 function(inner_done) {
-                    console.log('Starting third');
                     var crawler = new NodeCrawler(session);
 
                     var nodeId = "RootFolder";
 
                     crawler.read(nodeId, function (err, obj) {
-                        console.log('second', err);
                         if (!err) {
-                            console.log('read success');
                             obj.browseName.toString().should.equal("Root");
                             obj.organizes.length.should.equal(3);
                             obj.organizes[0].browseName.toString().should.eql("Objects");
